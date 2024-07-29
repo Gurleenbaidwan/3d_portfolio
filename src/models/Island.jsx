@@ -57,8 +57,27 @@ const Island = ({isRotating ,setIsRotating , ...props}) => {
     }
   }
   
+  const handleKeyDown = (e) =>{
+    if( e.key === 'ArrowLeft'){
+      if(!isRotating) setIsRotating(true);
+      islandRef.current.rotation.y += 0.01 * Math.PI;
+      }else if( e.key === 'ArrowRight'){
+        if(!isRotating) setIsRotating(true);
+        islandRef.current.rotation.y -= 0.01 * Math.PI;
+      }
+    }
+  }
   useEffect(() => {
-    document.addEventListener()
+    document.addEventListener('pointerdown',handlePointerDown);
+    document.addEventListener('pointerup',handlePointerUp);
+    document.addEventListener('pointermove',handlePointerMove);
+
+    return () => {
+      document.removeEventListener('pointerdown',handlePointerDown);
+      document.removeEventListener('pointerup',handlePointerUp);
+      document.removeEventListener('pointermove',handlePointerMove);
+    }
+    
   },[gl , handlePointerDown, handlePointerUp,handlePointerMove])
   return (
     <a.group ref={islandRef} {...props}>
